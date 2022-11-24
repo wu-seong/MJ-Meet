@@ -11,6 +11,6 @@ public class LoginController {
     @RequestMapping("/login")
     @ResponseBody
     public String login() {
-        return "login!";
+        return "login!!";
     }
 }
