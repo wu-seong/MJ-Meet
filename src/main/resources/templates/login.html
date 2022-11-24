@@ -14,7 +14,7 @@
   </thead>
   <tbody>
   <tr th:each=" UserEntity: ${userList}">
-    <td th:text="${UserEntity.password}"></td>
+    <td th:href="@{|/userlist/${UserEntity.id}|}" text="${UserEntity.password}"></td>
     <td th:text="${UserEntity.username}"></td>
   </tr>
   </tbody>
