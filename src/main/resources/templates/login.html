@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>login</title>
-</head>
-<body>
-<table>
-  <thead>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<div class="container my-3">
+<table class="table">
+  <thead class="table-dark">
   <tr>
+    <th>번호</th>
     <th>비밀번호</th>
     <th>유저네임</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each=" UserEntity: ${userList}">
-    <td th:href="@{|/userlist/${UserEntity.id}|}" text="${UserEntity.password}"></td>
+  <tr th:each=" UserEntity, loop: ${userList}">
+    <td th:text="${loop.count}"></td>
+    <td>
+    <a th:href="@{|/userlist/${UserEntity.id}|}" th:text="${UserEntity.password}"></a>
+    </td>
     <td th:text="${UserEntity.username}"></td>
   </tr>
   </tbody>
 </table>
-</body>
-</html>
+</div>
