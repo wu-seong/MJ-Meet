@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>비밀번호</th>
+    <th>유저네임</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each=" UserEntity: ${userList}">
+    <td th:text="${UserEntity.password}"></td>
+    <td th:text="${UserEntity.username}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
