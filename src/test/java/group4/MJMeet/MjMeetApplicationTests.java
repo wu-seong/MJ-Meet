@@ -2,6 +2,7 @@ package group4.MJMeet;
 
 import group4.MJMeet.User.UserEntity;
 import group4.MJMeet.User.UserRepository;
+import group4.MJMeet.User.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +15,17 @@ import java.util.Optional;
 class MjMeetApplicationTests {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	@Test
 	void contextLoads() {
 
 
 
-		UserEntity q1 = new UserEntity();
-		q1.setPassword("jimin");
-		q1.setUsername("지민");
-		this.userRepository.save(q1);
-
-		UserEntity q2 = new UserEntity();
-		q2.setPassword("jimin1");
-		q2.setUsername("지민2");
-		this.userRepository.save(q2);
-
-//		Optional<UserEntity> oq = this.userRepository.findById(0);
-//		if(oq.isPresent()) {
-//			UserEntity q = oq.get();
-//			assertEquals("지민", q.getUsername());
-//			System.out.print(q);
-//		}
+		for(int i = 0; i <= 200;i ++) {
+			String password = String.format("테스트 데이터입니다:[%03d]", i);
+			String username = "내용무";
+			this.userService.create(password, username);
+		}
 
 	}
 

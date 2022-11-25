@@ -12,7 +12,7 @@
   <tbody>
   <tr th:each=" UserEntity, loop: ${paging}">
     <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-    <td th:text="${loop.count}"></td>
+
     <td>
     <a th:href="@{|/userlist/${UserEntity.id}|}" th:text="${UserEntity.password}"></a>
     </td>
