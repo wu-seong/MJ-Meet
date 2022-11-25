@@ -28,8 +28,8 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public UserEntity getUserEntity(Integer id) {
-        Optional<UserEntity> userEntity = this.userRepository.findById(id);
+    public UserEntity getUserEntity(Integer num) {
+        Optional<UserEntity> userEntity = this.userRepository.findById(num);
         if (userEntity.isPresent()) {
             return userEntity.get();
         } else {

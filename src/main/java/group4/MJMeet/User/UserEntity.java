@@ -20,12 +20,15 @@ public class UserEntity {
 
     @Id //id 어노테이션
     @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터를 저장할 때 해당 속성에 값을 따로 세팅하지 않아도 1씩 자동으로 증가하
-    private Integer id;
+    private Integer num;
+
+    @Column(unique = true)
+    private String id;
 
     @Column//테이블 컬럼 어노테이션
     private String password;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
 }
