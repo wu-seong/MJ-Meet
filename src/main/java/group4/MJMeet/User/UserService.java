@@ -11,6 +11,13 @@ import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import group4.MJMeet.DataNotFoundException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.ArrayList;
+import org.springframework.data.domain.Sort;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -28,6 +35,20 @@ public class UserService {
         } else {
             throw new DataNotFoundException("question not found");
         }
+    }
+
+    public void create(String password, String username) {
+        UserEntity u = new UserEntity();
+        u.setPassword(password);
+        u.setUsername(username);
+        this.userRepository.save(u);
+    }
+
+    public Page<UserEntity> getList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.userRepository.findAll(pageable);
     }
 }
 
