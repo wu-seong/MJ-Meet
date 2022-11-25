@@ -35,6 +35,9 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'// 입력받은 값 검증 2-15 관련 어노테이션
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'//스프링 시큐리티 의존성 추가
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
 tasks.named('test') {
