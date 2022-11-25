@@ -1,14 +1,17 @@
 package group4.MJMeet.User;
 
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import org.springframework.ui.Model; // 모델 추가
 import lombok.RequiredArgsConstructor; // 생성자
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.PathVariable; // 경로에 변수
+
 
 
 @RequiredArgsConstructor
@@ -18,10 +21,10 @@ public class LoginController {
     private final UserRepository userRepository;
     private final UserService userService;
     @RequestMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 
-        List<UserEntity> userEntityList = this.userRepository.findAll();
-        model.addAttribute("userList", userEntityList);
+        Page<UserEntity> paging = this.userService.getList(page);
+        model.addAttribute("paging", paging);
 
         return "login";
     }
@@ -32,4 +35,6 @@ public class LoginController {
         model.addAttribute("userEntity", userEntity);
         return "userdetail";
     }
+
+
 }
