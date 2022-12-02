@@ -30,7 +30,7 @@ class MemberServiceTest {
         member.setName("hello2");
         member.setPasswd("1234");
         //when
-        Long saveId = memberService.join(member);
+        String saveId = memberService.join(member);
         //then
         Member findMember = memberService.findOne(saveId).get();
         Assertions.assertThat(member.getName()).isEqualTo(findMember.getName());

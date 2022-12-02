@@ -2,21 +2,20 @@ package group4.MJMeet.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
 public class Member {
-    @Id //pk 설정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 자동으로 ID 지정
-    private Long id;
+     //pk 설정
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 자동으로 ID 지정
+    @Id
+    @Column(name = "id")
+    private String id;
     private String name;
     private String passwd;
-
-
 }

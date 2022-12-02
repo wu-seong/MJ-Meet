@@ -21,16 +21,17 @@ public class JpaMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findById(Long id) {
+    public Optional<Member> findById(String id) {
+        System.out.println("id: " + id);
         Member member = em.find(Member.class, id);
         return Optional.ofNullable(member);
     }
 
-    @Override
-    public Optional<Member> findByName(String name) { //DB에서 Member Entity를 순회하여 매칭되는 name을 찾는다.
-        List<Member> result = em.createQuery("select m from Member m where m.name = :name", Member.class).setParameter("name", name).getResultList();
-        return result.stream().findAny();
-    }
+//    @Override
+//    public Optional<Member> findByName(String name) { //DB에서 Member Entity를 순회하여 매칭되는 name을 찾는다.
+////        List<Member> result = em.createQuery("select m from Member m where m.name = :name", Member.class).setParameter("name", name).getResultList();
+////        return result.stream().findAny();
+//    }
 
     @Override
     public List<Member> findAll() {
