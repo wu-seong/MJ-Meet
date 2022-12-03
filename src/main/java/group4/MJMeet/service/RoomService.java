@@ -14,7 +14,7 @@ import java.util.Optional;
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    public Optional<Room> findOne(Long roomId){ //roomId로 방을 조회하는 메소드
+    public Optional<Room> findRoom(Long roomId){ //roomId로 방을 조회하는 메소드
         return roomRepository.findById(roomId);
     }
     public String mergeTimetable(Long roomId ,String addedTimetable){ //기존 타임 테이블과 새로운 타임 테이블을 병합

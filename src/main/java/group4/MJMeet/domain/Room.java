@@ -17,8 +17,5 @@ public class Room {
     private int meetingTime;
     private int totalCount;
     private int participantsCount = 0;
-    private String members;
     private String timetable;
-    @Transient
-    private List<String> memberList = new ArrayList<>();
 }
