@@ -14,6 +14,7 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long RoomId;
+    private String RoomName;
     private int meetingTime;
     private int totalCount;
     private int participantsCount = 0;

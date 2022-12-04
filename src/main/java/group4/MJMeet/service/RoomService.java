@@ -1,8 +1,7 @@
 package group4.MJMeet.service;
 
-import group4.MJMeet.domain.Member;
+
 import group4.MJMeet.domain.Room;
-import group4.MJMeet.repository.MemberRepository;
 import group4.MJMeet.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +24,9 @@ public class RoomService {
         //만약 병합한 결과가 유효(지정된 시간 이하)하지 않다면 예외 처리
         return result;
     }
-
     public Long createAndEnroll(Room room, String userId){ //방을 추가하고 방에 유저 등록
        roomRepository.create(room);
        roomRepository.enroll(room.getRoomId(), userId);
         return room.getRoomId();
     }
-
 }
