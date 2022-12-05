@@ -5,8 +5,11 @@ import group4.MJMeet.domain.Room;
 import group4.MJMeet.domain.RoomMember;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JpaRoomRepository implements RoomRepository {
     private final EntityManager em;
@@ -54,6 +57,17 @@ public class JpaRoomRepository implements RoomRepository {
 
     @Override
     public List<RoomMember> findAll() {
-        return em.createQuery("select rm from RoomMember rm", RoomMember.class).getResultList();
+        return  em.createQuery("select rm from RoomMember rm", RoomMember.class).getResultList();
+    }
+
+    @Override
+    public List<String> findMemberIdByRoomId(Long roomId) {
+        //roomId를 통해 MemberId를 List로 불러와서 반환
+        List<RoomMember> filteredRm = findAll().stream().filter( roomMember -> roomMember.getRoomId().equals(roomId)).collect(Collectors.toList());
+        List<String> filteredMemberId = new ArrayList<>();
+        for(int i = 0; i<filteredRm.size(); i++){
+            filteredMemberId.add(filteredRm.get(i).getUserId());
+        }
+        return filteredMemberId;
     }
 }

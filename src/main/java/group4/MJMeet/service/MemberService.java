@@ -16,6 +16,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+
     public String join(Member member){ //회원을 추가하는 메소드
         //중복회원 체크
         validateDuplicateMember(member);

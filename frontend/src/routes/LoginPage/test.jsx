@@ -65,6 +65,33 @@ const LoginPage = () =>{
             console.log(response.data);
         })
     }
+
+    const getRoomTimetable = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/roomTimetable",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:"1"
+
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
+    const getRoomInfo = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/roomInfo",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:"1"
+
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
     return(
         <div className="wrapper">
             <p className="title">Login</p>
@@ -72,10 +99,11 @@ const LoginPage = () =>{
             <input className="password" type="text" onChange={onChangePasswd}/>
             <button className="nextButton" type="button" onClick={login}>로그인</button>
             <button className="nextButton" type="button" onClick={createRoom}>방 생성</button>
-            <button className="nextButton" type="button" onClick={lookupRoom}>방 조회</button>
+            <button className="nextButton" type="button" onClick={lookupRoom}>방 리스트 조회</button>
+            <button className="nextButton" type="button" onClick={getRoomTimetable}>방 시간 조회</button>
+            <button className="nextButton" type="button" onClick={getRoomInfo}>방 정보 조회</button>
         </div>
     )
-
 
 }
 export default LoginPage;

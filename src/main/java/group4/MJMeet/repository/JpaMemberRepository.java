@@ -4,6 +4,7 @@ import group4.MJMeet.domain.Member;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 

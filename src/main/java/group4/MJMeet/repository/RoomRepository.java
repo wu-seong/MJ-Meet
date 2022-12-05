@@ -15,4 +15,6 @@ public interface RoomRepository {
     void enroll(Long roomId, String id);
     String addTimetable(String timetable);
     List<RoomMember> findAll();
+
+    List<String> findMemberIdByRoomId(Long id);
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,9 +38,23 @@ public class RoomController {
     @PostMapping("/api/rooms")
     @ResponseBody
     public Room[] lookupRoom(@RequestBody String userId){
+        //userId 받아오기
         String uid = userId.substring(0,userId.length()-1).substring(1);
-        System.out.println(uid);
+        //userId 입력하여 유저가 속한 방 정보 가져와 List에 저장
         List<Room> filteredRoom  = roomService.findRooms(uid);
         return filteredRoom.toArray(new Room[filteredRoom.size()]);
+    }
+
+    @PostMapping("api/roomTimetable")
+    @ResponseBody
+    public String getRoomTimetable(@RequestBody Long roomId){
+        Optional<Room> room = roomService.findRoom(roomId);
+        return room.get().getTimetable();
+    }
+    @PostMapping("api/roomInfo")
+    @ResponseBody
+    public Room getRoomInfo(@RequestBody Long roomId){
+        Optional<Room> room = roomService.findRoom(roomId);
+        return room.get();
     }
 }

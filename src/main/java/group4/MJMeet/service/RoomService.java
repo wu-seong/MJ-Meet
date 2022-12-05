@@ -45,4 +45,8 @@ public class RoomService {
        roomRepository.enroll(room.getRoomId(), userId);
         return room.getRoomId();
     }
+    public List<String> MemberIds(Long roomId){
+        return roomRepository.findMemberIdByRoomId(roomId);
+    }
+
 }
