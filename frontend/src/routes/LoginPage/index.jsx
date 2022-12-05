@@ -52,13 +52,27 @@ const LoginPage = () =>{
             console.log(response.data);
         })
     }
+    const lookupRoom = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/rooms",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:account.id
 
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
     return(
         <div className="wrapper">
             <p className="title">Login</p>
             <input className="id" type="text" onChange={onChangeId}/>
             <input className="password" type="text" onChange={onChangePasswd}/>
-            <button className="nextButton" type="button" onClick={createRoom}>로그인</button>
+            <button className="nextButton" type="button" onClick={login}>로그인</button>
+            <button className="nextButton" type="button" onClick={createRoom}>방 생성</button>
+            <button className="nextButton" type="button" onClick={lookupRoom}>방 조회</button>
         </div>
     )
 

@@ -30,7 +30,9 @@ public class JpaRoomRepository implements RoomRepository {
 
     @Override
     public List<Room> findByMember(String userId) { //RoomMember테이블 순회하며 해당 유저Id가 등록된 모든 방 찾기
+        System.out.println(userId);
         List<RoomMember> result = em.createQuery("select rm from RoomMember rm where rm.userId = :userId", RoomMember.class).setParameter("userId", userId).getResultList();
+        System.out.println(result);
         return null;
     }
 
@@ -51,7 +53,7 @@ public class JpaRoomRepository implements RoomRepository {
     }
 
     @Override
-    public List<Room> findAll() {
-        return null;
+    public List<RoomMember> findAll() {
+        return em.createQuery("select rm from RoomMember rm", RoomMember.class).getResultList();
     }
 }

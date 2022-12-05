@@ -2,11 +2,16 @@ package group4.MJMeet.service;
 
 
 import group4.MJMeet.domain.Room;
+import group4.MJMeet.domain.RoomMember;
 import group4.MJMeet.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -15,6 +20,17 @@ public class RoomService {
 
     public Optional<Room> findRoom(Long roomId){ //roomId로 방을 조회하는 메소드
         return roomRepository.findById(roomId);
+    }
+    public List<Room> findRooms(String userId){
+        List<RoomMember> rm =  roomRepository.findAll().stream().filter( (roomMember) -> {
+            return roomMember.getUserId().equals(userId);
+        }).collect(Collectors.toList());
+        //가져온 RoomMember 객체의 RoomId를 이용하여 Room가져와 리스트로 만들기
+        List<Room> filteredRoom = new LinkedList<>();
+        for(int i = 0; i<rm.size(); i++){
+            filteredRoom.add( roomRepository.findById(rm.get(i).getRoomId()).get() );
+        }
+        return filteredRoom;
     }
     public String mergeTimetable(Long roomId ,String addedTimetable){ //기존 타임 테이블과 새로운 타임 테이블을 병합
         String result = addedTimetable;

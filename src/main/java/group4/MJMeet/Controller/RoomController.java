@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,5 +32,14 @@ public class RoomController {
 
         roomService.createAndEnroll(room, userId);
         return room;
+    }
+
+    @PostMapping("/api/rooms")
+    @ResponseBody
+    public Room[] lookupRoom(@RequestBody String userId){
+        String uid = userId.substring(0,userId.length()-1).substring(1);
+        System.out.println(uid);
+        List<Room> filteredRoom  = roomService.findRooms(uid);
+        return filteredRoom.toArray(new Room[filteredRoom.size()]);
     }
 }
