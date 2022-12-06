@@ -25,6 +25,11 @@ public class MemberController {
         return member;
     }
 
+    @RequestMapping("/")
+    public String root() {
+        return "redirect:/api/login";
+    }
+
     @PostMapping("/api/login")
     @ResponseBody
     public Member login(@RequestBody Member member) {
