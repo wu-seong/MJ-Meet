@@ -18,7 +18,7 @@ public class Room {
     private int totalCount;
     private int participantsCount = 0;
 
-    private List<RoomMember> getRoommemberTimetable() {
+    public List<RoomMember> getRoomMemberList() {
         return roomMemberList;
     }
 

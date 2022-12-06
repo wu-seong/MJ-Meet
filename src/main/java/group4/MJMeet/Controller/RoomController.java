@@ -1,6 +1,7 @@
 package group4.MJMeet.Controller;
 
 import group4.MJMeet.domain.Room;
+import group4.MJMeet.domain.RoomMember;
 import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +49,9 @@ public class RoomController {
 
     @PostMapping("api/roomTimetable")
     @ResponseBody
-    public List<Timetable> getRoomTimetable(@RequestBody Long roomId){
+    public List<RoomMember> getRoomTimetable(@RequestBody Long roomId){
         Optional<Room> room = roomService.findRoom(roomId);
-        return room.get().getTimetableList();
+        return room.get().getRoomMemberList();
     }
     @PostMapping("api/roomInfo")
     @ResponseBody
