@@ -18,4 +18,11 @@ public class RoomMember {
     private Long id;
     private String userId;
     private Long roomId;
+    private String mondayTimetable;
+    private String tuesdayTimetable;
+    private String wednesdayTimetable;
+    private String thursdayTimetable;
+    private String fridayTimetable;
+    private String saturdayTimetable;
+    private String sundayTimetable;
 }

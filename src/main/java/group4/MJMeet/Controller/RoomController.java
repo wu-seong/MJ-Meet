@@ -47,9 +47,18 @@ public class RoomController {
 
     @PostMapping("api/roomTimetable")
     @ResponseBody
-    public String getRoomTimetable(@RequestBody Long roomId){
+    public String[] getRoomTimetable(@RequestBody Long roomId){
         Optional<Room> room = roomService.findRoom(roomId);
-        return room.get().getTimetable();
+        //각 요일마다의 타임테이블 정보를 담는 스트링 배열
+        String[] timeTable = new String[7];
+        timeTable[0] = room.get().getMondayTimetable();
+        timeTable[1] = room.get().getTuesdayTimetable();
+        timeTable[2] = room.get().getWednesdayTimetable();
+        timeTable[3] = room.get().getThursdayTimetable();
+        timeTable[4] = room.get().getFridayTimetable();
+        timeTable[5] = room.get().getSaturdayTimetable();
+        timeTable[6] = room.get().getSundayTimetable();
+        return timeTable;
     }
     @PostMapping("api/roomInfo")
     @ResponseBody

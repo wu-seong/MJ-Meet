@@ -28,7 +28,6 @@ class RoomServiceTest {
         Room r = new Room();
         r.setMeetingTime(2);
         r.setParticipantsCount(1);
-        r.setTimetable("01110101");
         Long saveId = roomService.createAndEnroll(r, "60192234");
         //then
 //        Member findMember = memberService.findOne(saveId).get();

@@ -18,5 +18,13 @@ public class Room {
     private int meetingTime;
     private int totalCount;
     private int participantsCount = 0;
-    private String timetable;
+    private String mondayTimetable;
+    private String tuesdayTimetable;
+    private String wednesdayTimetable;
+    private String thursdayTimetable;
+    private String fridayTimetable;
+    private String saturdayTimetable;
+    private String sundayTimetable;
+
+
 }
