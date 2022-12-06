@@ -2,7 +2,6 @@ package group4.MJMeet.Controller;
 
 import group4.MJMeet.domain.Room;
 import group4.MJMeet.domain.RoomMember;
-import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
