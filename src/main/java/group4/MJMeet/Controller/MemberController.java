@@ -35,6 +35,7 @@ public class MemberController {
     public Member login(@RequestBody Member member) {
         //log.info("user email = {}", user.get("email"));
         //id가 유효한지 확인
+        System.out.println(member.getId());
         if(!memberService.findOne(member.getId()).isPresent()) {
             //유효하지 않은 id이면 id에 -1가진 맴버 객체 반환
             new IllegalArgumentException("가입되지 않은 id 입니다.");

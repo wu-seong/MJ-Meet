@@ -92,6 +92,28 @@ const LoginPage = () =>{
             console.log(response.data);
         })
     }
+    const saveTimetable = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/timetable",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:{
+                userId:"jws1228",
+                roomId:"33",
+                mondayTimetable:"00110110111100111111001111111111",
+                tuesdayTimetable:"00110110111100111111001111111111",
+                wednesdayTimetable:"00110110111100111111001111111111",
+                thursdayTimetable:"00110110111100111111001111111111",
+                fridayTimetable:"00110110111100111111001111111111",
+                saturdayTimetable:"00110110111100111111001111111111",
+                sundayTimetable:"00110110111100111111001111111111"
+            }
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
     return(
         <div className="wrapper">
             <p className="title">Login</p>
@@ -102,6 +124,7 @@ const LoginPage = () =>{
             <button className="nextButton" type="button" onClick={lookupRoom}>방 리스트 조회</button>
             <button className="nextButton" type="button" onClick={getRoomTimetable}>방 시간 조회</button>
             <button className="nextButton" type="button" onClick={getRoomInfo}>방 정보 조회</button>
+            <button className="nextButton" type="button" onClick={saveTimetable}>시간표 저장</button>
         </div>
     )
 

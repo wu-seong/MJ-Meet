@@ -26,5 +26,12 @@ public class Room {
     private String saturdayTimetable;
     private String sundayTimetable;
 
+//    public List<RoomMember> getRoomMemberList() {
+//        return roomMemberList;
+//    }
+//
+//    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
+//    private List<RoomMember> roomMemberList;
+//}
 
 }

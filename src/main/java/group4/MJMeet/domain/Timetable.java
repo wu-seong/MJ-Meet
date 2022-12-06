@@ -1,23 +1,13 @@
 package group4.MJMeet.domain;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-
-@Entity
+//시간정보를 주고 받기 위한 객체
 @Getter
 @Setter
-public class RoomMember {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Timetable {
     private String userId;
-
-//    @ManyToOne
-//    private Room room;
-
     private Long roomId;
     private String mondayTimetable;
     private String tuesdayTimetable;

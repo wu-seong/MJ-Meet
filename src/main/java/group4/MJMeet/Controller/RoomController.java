@@ -1,6 +1,8 @@
 package group4.MJMeet.Controller;
 
 import group4.MJMeet.domain.Room;
+import group4.MJMeet.domain.RoomMember;
+import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -65,5 +67,13 @@ public class RoomController {
     public Room getRoomInfo(@RequestBody Long roomId){
         Optional<Room> room = roomService.findRoom(roomId);
         return room.get();
+    }
+
+    @PostMapping("api/timetable")
+    @ResponseBody
+    public RoomMember save(@RequestBody Timetable timetable){
+        //userId와 roomId로 접근하여
+        //각 요일에 시간 정보 넣기
+        return roomService.saveTimetable(timetable.getUserId(), timetable.getRoomId(), timetable);
     }
 }

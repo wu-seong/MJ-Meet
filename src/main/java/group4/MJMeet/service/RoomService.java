@@ -3,6 +3,7 @@ package group4.MJMeet.service;
 
 import group4.MJMeet.domain.Room;
 import group4.MJMeet.domain.RoomMember;
+import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,12 @@ public class RoomService {
     }
     public List<String> MemberIds(Long roomId){
         return roomRepository.findMemberIdByRoomId(roomId);
+    }
+    public RoomMember saveTimetable(String userId, Long roomId, Timetable timetable){
+        //시간표를 저장하고 저장한 사람을 카운팅함
+        RoomMember rm = roomRepository.insertTimetable(userId, roomId, timetable).get();
+        roomRepository.countSave(roomId);
+        return rm;
     }
 
 }
