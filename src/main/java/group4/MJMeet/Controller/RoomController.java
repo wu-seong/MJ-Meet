@@ -1,6 +1,7 @@
 package group4.MJMeet.Controller;
 
 import group4.MJMeet.domain.Room;
+import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -47,9 +48,9 @@ public class RoomController {
 
     @PostMapping("api/roomTimetable")
     @ResponseBody
-    public String getRoomTimetable(@RequestBody Long roomId){
+    public List<Timetable> getRoomTimetable(@RequestBody Long roomId){
         Optional<Room> room = roomService.findRoom(roomId);
-        return room.get().getTimetable();
+        return room.get().getTimetableList();
     }
     @PostMapping("api/roomInfo")
     @ResponseBody
