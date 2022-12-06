@@ -18,10 +18,10 @@ public class Room {
     private int totalCount;
     private int participantsCount = 0;
 
-    private List<Timetable> getTimetable() {
-        return timetableList;
+    private List<RoomMember> getRoommemberTimetable() {
+        return roomMemberList;
     }
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
-    private List<Timetable> timetableList;
+    private List<RoomMember> roomMemberList;
 }
