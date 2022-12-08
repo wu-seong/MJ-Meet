@@ -3,11 +3,11 @@ package group4.MJMeet.service;
 
 import group4.MJMeet.domain.Room;
 import group4.MJMeet.domain.RoomMember;
-import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,11 +49,90 @@ public class RoomService {
     public List<String> MemberIds(Long roomId){
         return roomRepository.findMemberIdByRoomId(roomId);
     }
-    public RoomMember saveTimetable(String userId, Long roomId, Timetable timetable){
-        //시간표를 저장하고 저장한 사람을 카운팅함
-        RoomMember rm = roomRepository.insertTimetable(userId, roomId, timetable).get();
-        roomRepository.countSave(roomId);
-        return rm;
+
+    public RoomMember getPossible(List<RoomMember> roomMembers, RoomMember newTimetable,  int meetingTime){
+        //머지테이블 초기화
+        RoomMember merge;
+        if(roomMembers.get(0).getUserId().equals(newTimetable.getUserId())){
+            //첫 멤버테이블이 갱신될 테이블일 때
+            merge = newTimetable;
+        }
+        else{
+            merge = roomMembers.get(0);
+        }
+        //유저들의 테이블을 순회하면서 머지테이블 완성하기
+        for(int i = 1 ;i<roomMembers.size(); i++){
+            //새로운 시간표를 반영
+
+            if( roomMembers.get(i).getUserId().equals(newTimetable.getUserId()) ){
+                //System.out.println("ss");
+              merge = RoomMember.mergeTimetable(merge, newTimetable);
+              continue;
+            }
+            merge = RoomMember.mergeTimetable(merge, roomMembers.get(i) );
+        }
+
+        //머지된 시간표는 방시간표로 세팅
+        merge.setRoomId(newTimetable.getRoomId());
+        merge.setUserId(newTimetable.getRoomId().toString());
+
+        return isPossible(merge, meetingTime) ? merge : null;
+
+    }
+    public boolean isPossible(RoomMember roomMember, int meetingTime){
+         //요일 중 하나라도 가능한 시간을 넘기면 가능한 시간표
+        return isOverTime(roomMember.getMondayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getTuesdayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getWednesdayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getThursdayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getFridayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getSaturdayTimetable(), meetingTime) ||
+                isOverTime(roomMember.getSundayTimetable(), meetingTime)
+            ? true : false;
+    }
+    public boolean isOverTime(String timetable, int meetingTime){
+        int maxLength = 0;
+        int length = 0;
+        boolean[] boolTimetable = RoomMember.changeBool(timetable);
+        for(int i = 0; i<boolTimetable.length; i++){
+            if(boolTimetable[i]){
+                length++;
+                maxLength = Integer.max(maxLength, length);
+            }
+            else{
+                length = 0;
+            }
+        }
+        System.out.println("maxLength: " + maxLength);
+        return maxLength >= meetingTime*2 ? true : false;
+    }
+    public RoomMember saveTimetable(RoomMember roomMember){
+
+        //roomId로 roomMember리스트 불러오기
+        List<RoomMember> roomMembers = roomRepository.getRoomMemberListByRoomId(roomMember.getRoomId());
+        //roomMember, timetable, meetingTime
+        //roomId에 있는 RoomMember의 시간 표를 다시 계산하여 meetingTime보다 큰 시간이 있는지 판단 (이때 새로운 시간표를 반영하여 계산)
+        RoomMember mergedTimetable = getPossible(roomMembers, roomMember, roomRepository.findById(roomMember.getRoomId()).get().getMeetingTime());
+        if(mergedTimetable == null){
+            mergedTimetable = new RoomMember();
+            mergedTimetable.setId(-1L);
+            return mergedTimetable;
+        }
+        //가능한 시간이 있으면 카운팅하고 , RoomMember에 새로운 시간표와 머지된 방 시간표 갱신 저장, 아니면 그대로 예외처리
+        //카운팅한 인원이 전체 인원과 같으면 우선시간과 여유시간 계산하여 저장
+        roomRepository.setTimetable(roomMember);
+        roomRepository.setTimetable(mergedTimetable);
+
+        return mergedTimetable;
+    }
+    public RoomMember findRoomTimetable(Long roomId){
+        RoomMember temp = new RoomMember();
+        temp.setRoomId(roomId);
+        temp.setUserId(roomId.toString());
+        return roomRepository.findOne(temp).get();
     }
 
+    public boolean enrollRoomMember(Long roomId, String userId){
+        return roomRepository.enroll(roomId, userId);
+    }
 }

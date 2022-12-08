@@ -45,7 +45,7 @@ const LoginPage = () =>{
             data:{
                 id:account.id,
                 roomName:"방이름",
-                meetingTime: "2"
+                meetingTime: "3"
             }
 
         }).then( (response) => {
@@ -100,8 +100,8 @@ const LoginPage = () =>{
                 "Content-Type": `application/json`,
             },
             data:{
-                userId:"jws1228",
-                roomId:"33",
+                userId:account.id,
+                roomId:"38",
                 mondayTimetable:"00110110111100111111001111111111",
                 tuesdayTimetable:"00110110111100111111001111111111",
                 wednesdayTimetable:"00110110111100111111001111111111",
@@ -110,6 +110,44 @@ const LoginPage = () =>{
                 saturdayTimetable:"00110110111100111111001111111111",
                 sundayTimetable:"00110110111100111111001111111111"
             }
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
+    const saveTimetable2 = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/timetable",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:{
+                userId:account.id,
+                roomId:"38",
+                mondayTimetable:"00000000000000000000000011111111",
+                tuesdayTimetable:"00110110111100111111001111111111",
+                wednesdayTimetable:"00110110111100111111001111111111",
+                thursdayTimetable:"00110110111100111111001111111111",
+                fridayTimetable:"00110110111100111111001111111111",
+                saturdayTimetable:"00110110111100111111001111111111",
+                sundayTimetable:"00110110111100111111001111111111"
+            }
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
+    const enrollMember = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/room/user",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:{
+                roomId:"38",
+                userId:account.id
+            }
+
         }).then( (response) => {
             console.log(response.data);
         })
@@ -125,6 +163,8 @@ const LoginPage = () =>{
             <button className="nextButton" type="button" onClick={getRoomTimetable}>방 시간 조회</button>
             <button className="nextButton" type="button" onClick={getRoomInfo}>방 정보 조회</button>
             <button className="nextButton" type="button" onClick={saveTimetable}>시간표 저장</button>
+            <button className="nextButton" type="button" onClick={saveTimetable2}>시간표 저장2</button>
+            <button className="nextButton" type="button" onClick={enrollMember}>방에 유저 등록</button>
         </div>
     )
 

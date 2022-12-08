@@ -2,7 +2,6 @@ package group4.MJMeet.Controller;
 
 import group4.MJMeet.domain.Room;
 import group4.MJMeet.domain.RoomMember;
-import group4.MJMeet.domain.Timetable;
 import group4.MJMeet.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,8 +31,9 @@ public class RoomController {
         Room room = new Room();
         room.setRoomName(roomName);
         room.setMeetingTime(meetingTime);
-
-        roomService.createAndEnroll(room, userId);
+        //얻은 방 ID를 UserID로 등록하여 방 시간표 추가
+        Long createdRoomId = roomService.createAndEnroll(room, userId);
+        roomService.enrollRoomMember(createdRoomId, createdRoomId.toString());
         return room;
     }
 
@@ -50,16 +50,16 @@ public class RoomController {
     @PostMapping("api/roomTimetable")
     @ResponseBody
     public String[] getRoomTimetable(@RequestBody Long roomId){
-        Optional<Room> room = roomService.findRoom(roomId);
+        RoomMember roomTimetable = roomService.findRoomTimetable(roomId);
         //각 요일마다의 타임테이블 정보를 담는 스트링 배열
         String[] timeTable = new String[7];
-        timeTable[0] = room.get().getMondayTimetable();
-        timeTable[1] = room.get().getTuesdayTimetable();
-        timeTable[2] = room.get().getWednesdayTimetable();
-        timeTable[3] = room.get().getThursdayTimetable();
-        timeTable[4] = room.get().getFridayTimetable();
-        timeTable[5] = room.get().getSaturdayTimetable();
-        timeTable[6] = room.get().getSundayTimetable();
+        timeTable[0] = roomTimetable.getMondayTimetable();
+        timeTable[1] = roomTimetable.getTuesdayTimetable();
+        timeTable[2] = roomTimetable.getWednesdayTimetable();
+        timeTable[3] = roomTimetable.getThursdayTimetable();
+        timeTable[4] = roomTimetable.getFridayTimetable();
+        timeTable[5] = roomTimetable.getSaturdayTimetable();
+        timeTable[6] = roomTimetable.getSundayTimetable();
         return timeTable;
     }
     @PostMapping("api/roomInfo")
@@ -71,9 +71,25 @@ public class RoomController {
 
     @PostMapping("api/timetable")
     @ResponseBody
-    public RoomMember save(@RequestBody Timetable timetable){
+    public RoomMember save(@RequestBody RoomMember roomMember){
         //userId와 roomId로 접근하여
         //각 요일에 시간 정보 넣기
-        return roomService.saveTimetable(timetable.getUserId(), timetable.getRoomId(), timetable);
+        return roomService.saveTimetable(roomMember);
+    }
+
+    @PostMapping("api/room/user")
+    @ResponseBody
+    //RoomMember에 유저 등록
+    public Room enrollRoom(@RequestBody HashMap<String, Object> para){
+        String userId = (String)para.get("userId");
+        Long roomId =  Long.parseLong((String)para.get("roomId"));
+        //중복이라 등록 하지 못하면 id -1인 룸객체 반환
+        if(!roomService.enrollRoomMember(roomId, userId)){
+            Room room = new Room();
+            room.setRoomId(-1L);
+            return room;
+        };
+        //등록하면 중복한 룸객체 반환
+        return roomService.findRoom(roomId).get();
     }
 }
