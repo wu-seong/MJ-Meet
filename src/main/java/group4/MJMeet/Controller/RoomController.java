@@ -94,8 +94,8 @@ public class RoomController {
     }
     @PostMapping("api/priorityTime")
     @ResponseBody
-    public String getPriorityResult(@RequestBody Long roomId){
-
+    public String getPriorityResult(@RequestBody HashMap<String, Object> para){
+        Long roomId =  Long.parseLong((String)para.get("roomId"));
         //룸id로 방 정보 현재 참여한 인원이 전체 인원보다 적으면 -1반환
         Room room = roomService.findRoom(roomId).get();
         if(!roomService.saveAll(room)){ //
@@ -105,10 +105,9 @@ public class RoomController {
         //아니면
         //룸id로 RoomMember에 있는 방 시간표와 meetingTime을 가져오기
         RoomMember roomTimetable = roomService.findRoomTimetable(roomId);
-        //String result = calculatePriority(roomTimetable, meetingTime);
+        String result = RoomMember.hashToString(RoomMember.firstTime(roomTimetable, meetingTime));
         //연산한 텍스트 가저와서 넘겨주기
-        //return result;
-        return "-1";
+        return result;
     }
 
     @PostMapping("api/longTime")
