@@ -108,6 +108,7 @@ public class RoomController {
         //String result = calculatePriority(roomTimetable, meetingTime);
         //연산한 텍스트 가저와서 넘겨주기
         //return result;
+        return "-1";
     }
 
     @PostMapping("api/longTime")
@@ -126,5 +127,6 @@ public class RoomController {
         //String result = calculateLong(roomTimetable, meetingTime);
         //연산한 텍스트 가저와서 넘겨주기
         //return result;
+        return "-1";
     }
 }
