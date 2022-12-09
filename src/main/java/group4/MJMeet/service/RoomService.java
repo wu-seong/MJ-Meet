@@ -137,4 +137,9 @@ public class RoomService {
     public boolean enrollRoomMember(Long roomId, String userId){
         return roomRepository.enroll(roomId, userId);
     }
+
+    //모두가 시간표를 저장하였는지 확인한다.
+    public boolean saveAll(Room room){
+        return room.getTotalCount() == room.getParticipantsCount();
+    }
 }

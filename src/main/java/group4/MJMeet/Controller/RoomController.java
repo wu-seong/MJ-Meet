@@ -92,4 +92,39 @@ public class RoomController {
         //등록하면 중복한 룸객체 반환
         return roomService.findRoom(roomId).get();
     }
+    @PostMapping("api/priorityTime")
+    @ResponseBody
+    public String getPriorityResult(@RequestBody Long roomId){
+
+        //룸id로 방 정보 현재 참여한 인원이 전체 인원보다 적으면 -1반환
+        Room room = roomService.findRoom(roomId).get();
+        if(!roomService.saveAll(room)){ //
+            return "-1";
+        }
+        int meetingTime = room.getMeetingTime();
+        //아니면
+        //룸id로 RoomMember에 있는 방 시간표와 meetingTime을 가져오기
+        RoomMember roomTimetable = roomService.findRoomTimetable(roomId);
+        //String result = calculatePriority(roomTimetable, meetingTime);
+        //연산한 텍스트 가저와서 넘겨주기
+        //return result;
+    }
+
+    @PostMapping("api/longTime")
+    @ResponseBody
+    public String getLongResult(@RequestBody Long roomId){
+
+        //룸id로 방 정보 현재 참여한 인원이 전체 인원보다 적으면 -1반환
+        Room room = roomService.findRoom(roomId).get();
+        if(!roomService.saveAll(room)){ //
+            return "-1";
+        }
+        int meetingTime = room.getMeetingTime();
+        //아니면
+        //룸id로 RoomMember에 있는 방 시간표와 meetingTime을 가져오기
+        RoomMember roomTimetable = roomService.findRoomTimetable(roomId);
+        //String result = calculateLong(roomTimetable, meetingTime);
+        //연산한 텍스트 가저와서 넘겨주기
+        //return result;
+    }
 }
