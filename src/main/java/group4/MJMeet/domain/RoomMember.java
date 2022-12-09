@@ -171,4 +171,14 @@ public class RoomMember {
                 this.getSaturdayTimetable().equals(init)&&
                 this.getSundayTimetable().equals(init)) ? true : false;
     }
+    public void setFail(){
+        this.setMondayTimetable("-1");
+        this.setTuesdayTimetable("-1");
+        this.setWednesdayTimetable("-1");
+        this.setThursdayTimetable("-1");
+        this.setFridayTimetable("-1");
+        this.setSaturdayTimetable("-1");
+        this.setSundayTimetable("-1");
+
+    }
 }

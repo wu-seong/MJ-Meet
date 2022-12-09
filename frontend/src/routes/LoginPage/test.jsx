@@ -73,7 +73,7 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:"1"
+            data:"38"
 
         }).then( (response) => {
             console.log(response.data);
@@ -86,7 +86,7 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:"1"
+            data:"67" //방 리스트를 조회하여 얻은 방 id를 요청하여 방정보 받아옴
 
         }).then( (response) => {
             console.log(response.data);
@@ -101,7 +101,7 @@ const LoginPage = () =>{
             },
             data:{
                 userId:account.id,
-                roomId:"38",
+                roomId:"67",
                 mondayTimetable:"00110110111100111111001111111111",
                 tuesdayTimetable:"00110110111100111111001111111111",
                 wednesdayTimetable:"00110110111100111111001111111111",
@@ -123,14 +123,14 @@ const LoginPage = () =>{
             },
             data:{
                 userId:account.id,
-                roomId:"38",
-                mondayTimetable:"00000000000000000000000011111111",
-                tuesdayTimetable:"00110110111100111111001111111111",
-                wednesdayTimetable:"00110110111100111111001111111111",
-                thursdayTimetable:"00110110111100111111001111111111",
-                fridayTimetable:"00110110111100111111001111111111",
-                saturdayTimetable:"00110110111100111111001111111111",
-                sundayTimetable:"00110110111100111111001111111111"
+                roomId:"67",
+                mondayTimetable:"00000000000000000000000000011111",
+                tuesdayTimetable:"00000000000000000000000000011111",
+                wednesdayTimetable:"00000000000000000000000000011111",
+                thursdayTimetable:"00000000000000000000000000011111",
+                fridayTimetable:"00000000000000000000000000011111",
+                saturdayTimetable:"00000000000000000000000000011111",
+                sundayTimetable:"00000000000000000000000000011111"
             }
         }).then( (response) => {
             console.log(response.data);
@@ -144,7 +144,7 @@ const LoginPage = () =>{
                 "Content-Type": `application/json`,
             },
             data:{
-                roomId:"38",
+                roomId:"67",
                 userId:account.id
             }
 

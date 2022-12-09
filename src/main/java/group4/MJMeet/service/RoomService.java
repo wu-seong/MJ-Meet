@@ -114,7 +114,9 @@ public class RoomService {
         //roomId에 있는 RoomMember의 시간 표를 다시 계산하여 meetingTime보다 큰 시간이 있는지 판단 (이때 새로운 시간표를 반영하여 계산)
         RoomMember mergedTimetable = getPossible(roomMembers, roomMember, roomRepository.findById(roomMember.getRoomId()).get().getMeetingTime());
         if(mergedTimetable == null){
+            System.out.println("ss");
             mergedTimetable = new RoomMember();
+            mergedTimetable.setFail();
             mergedTimetable.setId(-1L);
             return mergedTimetable;
         }
