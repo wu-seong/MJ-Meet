@@ -101,7 +101,7 @@ public class RoomService {
             }
         }
         System.out.println("maxLength: " + maxLength);
-        return maxLength >= meetingTime*2 ? true : false;
+        return maxLength >= meetingTime ? true : false;
     }
 
     public RoomMember saveTimetable(RoomMember roomMember){
@@ -112,7 +112,6 @@ public class RoomService {
         //roomId에 있는 RoomMember의 시간 표를 다시 계산하여 meetingTime보다 큰 시간이 있는지 판단 (이때 새로운 시간표를 반영하여 계산)
         RoomMember mergedTimetable = getPossible(roomMembers, roomMember, roomRepository.findById(roomMember.getRoomId()).get().getMeetingTime());
         if(mergedTimetable == null){
-            System.out.println("ss");
             mergedTimetable = new RoomMember();
             mergedTimetable.setFail();
             mergedTimetable.setId(-1L);
@@ -201,7 +200,7 @@ public class RoomService {
                 }
 
                 System.out.println("maxLength: " + max);
-                this.maxLength  = max >= meetingTime*2 ? max : 0;
+                this.maxLength  = max >= meetingTime ? max : 0;
             }
             public String translateString(){
                 String result = weekDay[this.day] + " "; //요일 설정
@@ -251,10 +250,10 @@ public class RoomService {
             @Override
             public int compareTo(Object dayTime) { //가장 큰 문자를 비교
                 System.out.println(weekDay[this.day] + this.maxLength);
-                if(this.maxLength < meetingTime*2){ // 자신이이 최소시간을 넘기지 못하면 후순위로 밀림
+                if(this.maxLength < meetingTime){ // 자신이이 최소시간을 넘기지 못하면 후순위로 밀림
                     return 1;
                 }
-                else if(((DayTime)dayTime).maxLength < meetingTime*2) { //비교하는 요일이 최소시간을 넘기지 못하면 후순위로 밀림
+                else if(((DayTime)dayTime).maxLength < meetingTime) { //비교하는 요일이 최소시간을 넘기지 못하면 후순위로 밀림
                     return -1;
                 }
                 return this.day -((DayTime)dayTime).day;
@@ -296,7 +295,7 @@ public class RoomService {
                 }
 
                 System.out.println("maxLength: " + max);
-                this.maxLength  = max >= meetingTime*2 ? max : 0;
+                this.maxLength  = max >= meetingTime ? max : 0;
             }
             public String translateString(){
                 String result = weekDay[this.day] + " "; //요일 설정
