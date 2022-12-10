@@ -73,7 +73,7 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:"38"
+            data:"67"
 
         }).then( (response) => {
             console.log(response.data);
@@ -105,7 +105,7 @@ const LoginPage = () =>{
                 mondayTimetable:"00110110111100111111001111111111",
                 tuesdayTimetable:"00110110111100111111001111111111",
                 wednesdayTimetable:"00110110111100111111001111111111",
-                thursdayTimetable:"00110110111100111111001111111111",
+                thursdayTimetable:"00110110111100111111111111111111",
                 fridayTimetable:"00110110111100111111001111111111",
                 saturdayTimetable:"00110110111100111111001111111111",
                 sundayTimetable:"00110110111100111111001111111111"

@@ -105,7 +105,8 @@ public class RoomController {
         //아니면
         //룸id로 RoomMember에 있는 방 시간표와 meetingTime을 가져오기
         RoomMember roomTimetable = roomService.findRoomTimetable(roomId);
-        String result = RoomMember.hashToString(RoomMember.firstTime(roomTimetable, meetingTime));
+        String result = roomService.getPriorityTime(roomTimetable, meetingTime);
+        //String result = RoomMember.hashToString(RoomMember.firstTime(roomTimetable, meetingTime));
         //연산한 텍스트 가저와서 넘겨주기
         return result;
     }
