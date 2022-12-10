@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -106,6 +103,7 @@ public class RoomService {
         System.out.println("maxLength: " + maxLength);
         return maxLength >= meetingTime*2 ? true : false;
     }
+
     public RoomMember saveTimetable(RoomMember roomMember){
 
         //roomId로 roomMember리스트 불러오기
@@ -142,4 +140,97 @@ public class RoomService {
     public boolean saveAll(Room room){
         return room.getTotalCount() == room.getParticipantsCount();
     }
+
+    public String getLongTime(RoomMember roomTime, int meetingTime){
+        String[] weekDay = { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
+        class DayTime implements Comparable{ //heap에 넣어 요일별 가장 긴 여유시간을 비교할 객체
+            int day; //0~6 - 월~일
+            String timetable;
+            int maxLength;
+            int startIndex;
+            int endIndex;
+            String result;
+            public DayTime(int day, String timetable){
+                this.day = day;
+                this.timetable = timetable;
+                calculateMaxLength();
+                this.result = translateString();
+            }
+            @Override
+            public int compareTo(Object dayTime) { //가장 큰 문자를 비교
+                return ((DayTime)dayTime).maxLength - this.maxLength;
+            }
+            public void calculateMaxLength(){ //요일별 가장 큰 length를 계산
+                ArrayList<Integer> startIndex = new ArrayList<>();
+                ArrayList<Integer> endIndex = new ArrayList<>();
+                int max = 0;
+                int length = 0;
+                boolean[] boolTimetable = RoomMember.changeBool(timetable);
+                for(int i = 0; i<boolTimetable.length; i++){
+                    if(boolTimetable[i]){ //1
+                        //시작 1인 경우 startIndex 표시
+                        if(length == 0){
+                            startIndex.add(i);
+                        }
+                        length++;
+                        max = Integer.max(max, length);
+                    }
+                    else{
+
+                        if(length == 0){//start가 있어야 end가 있다
+                            continue;
+                        }
+                        endIndex.add(i);
+                        length = 0;
+                    }
+                }
+                endIndex.add(32);
+                System.out.println("max " + max);
+                if(max <meetingTime){
+                    return;
+                }
+                for(int i = 0; i<startIndex.size(); i++){
+
+                    System.out.println("start " + startIndex.get(i));
+                    System.out.println("end " + endIndex.get(i));
+                    if( max == endIndex.get(i) - startIndex.get(i) ){ //가장 긴 시간의 시작과 끝 인덱스 얻기
+                        this.startIndex = startIndex.get(i);
+                        this.endIndex = endIndex.get(i);
+                        break;
+                    }
+                }
+
+                System.out.println("maxLength: " + max);
+                this.maxLength  = max >= meetingTime*2 ? max : 0;
+            }
+            public String translateString(){
+                String result = weekDay[this.day] + " "; //요일 설정
+                //시작 시
+                result += String.valueOf ( (this.startIndex/2)+8) + "시 ";
+                //시작 분
+                result += this.startIndex%2 == 0 ? "00분" : "30분";
+                result += " ~ ";
+                //끝 시
+                result += String.valueOf ( (this.endIndex/2)+8) + "시 ";
+                //끝 분
+                result += this.endIndex%2 == 0 ? "00분" : "30분";
+                return result;
+            }
+
+        }
+
+        PriorityQueue<DayTime> longTimeHeap = new PriorityQueue<>();
+        //heap에 넣음
+        longTimeHeap.add(new DayTime(0,roomTime.getMondayTimetable()) );
+        longTimeHeap.add(new DayTime(1,roomTime.getTuesdayTimetable()) );
+        longTimeHeap.add(new DayTime(2,roomTime.getWednesdayTimetable()) );
+        longTimeHeap.add(new DayTime(3,roomTime.getThursdayTimetable()) );
+        longTimeHeap.add(new DayTime(4,roomTime.getFridayTimetable()) );
+        longTimeHeap.add(new DayTime(5,roomTime.getSaturdayTimetable()) );
+        longTimeHeap.add(new DayTime(6,roomTime.getSundayTimetable()) );
+        //가장 회의시간이 긴 요일객체를 꺼내옴
+        DayTime mostLongTime = longTimeHeap.poll();
+        return mostLongTime.result;
+    }
+
 }

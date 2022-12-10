@@ -167,6 +167,21 @@ const LoginPage = () =>{
             console.log(response.data);
         })
     }
+    const getLongResult = () => {
+        axios({
+            method:"post",
+            url:"http://localhost:8080/api/longTime",
+            headers: {
+                "Content-Type": `application/json`,
+            },
+            data:{
+                roomId:account.id
+            }
+
+        }).then( (response) => {
+            console.log(response.data);
+        })
+    }
     return(
         <div className="wrapper">
             <p className="title">Login</p>
@@ -181,6 +196,7 @@ const LoginPage = () =>{
             <button className="nextButton" type="button" onClick={saveTimetable2}>시간표 저장2</button>
             <button className="nextButton" type="button" onClick={enrollMember}>방에 유저 등록</button>
             <button className="nextButton" type="button" onClick={getPriorityResult}>가장 빠른 시간 결과</button>
+            <button className="nextButton" type="button" onClick={getLongResult}>가장 여유있는 시간 결과</button>
         </div>
     )
 
