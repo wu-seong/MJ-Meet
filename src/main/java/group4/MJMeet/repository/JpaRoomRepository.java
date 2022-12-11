@@ -5,6 +5,7 @@ import group4.MJMeet.domain.RoomMember;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

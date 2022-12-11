@@ -143,11 +143,11 @@ public class RoomService {
     public String getLongTime(RoomMember roomTime, int meetingTime){
         String[] weekDay = { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
         class DayTime implements Comparable{ //heap에 넣어 요일별 가장 긴 여유시간을 비교할 객체
-            int day; //0~6 - 월~일
+            private int day; //0~6 - 월~일
             String timetable;
-            int maxLength;
-            int startIndex;
-            int endIndex;
+            private int maxLength;
+            private int startIndex;
+            private int endIndex;
             String result;
             public DayTime(int day, String timetable){
                 this.day = day;
@@ -155,6 +155,8 @@ public class RoomService {
                 calculateMaxLength();
                 this.result = translateString();
             }
+
+            //요일별 maxLenth를 비교하여 우선순위를 정한다
             @Override
             public int compareTo(Object dayTime) { //가장 큰 문자를 비교
                 return ((DayTime)dayTime).maxLength - this.maxLength;
@@ -248,12 +250,12 @@ public class RoomService {
                 this.result = translateString();
             }
             @Override
-            public int compareTo(Object dayTime) { //가장 큰 문자를 비교
+            public int compareTo(Object dayTime) { //요일이 빠른 최대시간이 우선순위로 오도록 but, 최소시간 만족 못하면 밀림
                 System.out.println(weekDay[this.day] + this.maxLength);
-                if(this.maxLength < meetingTime){ // 자신이이 최소시간을 넘기지 못하면 후순위로 밀림
+                if(this.maxLength < meetingTime){ // 해당요일의 최대시간이 회의 최소시간을 넘기지 못하면 후순위로 밀림
                     return 1;
                 }
-                else if(((DayTime)dayTime).maxLength < meetingTime) { //비교하는 요일이 최소시간을 넘기지 못하면 후순위로 밀림
+                else if(((DayTime)dayTime).maxLength < meetingTime) { //비교하는 요일의 최대시간이 회의 최소시간을 넘기지 못하면 후순위로 밀림
                     return -1;
                 }
                 return this.day -((DayTime)dayTime).day;

@@ -44,8 +44,8 @@ const LoginPage = () =>{
             },
             data:{
                 id:account.id,
-                roomName:"방이름",
-                meetingTime: "3"
+                roomName:"test",
+                meetingTime: "1"
             }
 
         }).then( (response) => {
@@ -59,7 +59,9 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:account.id
+            data:{
+                userId:"test"
+            }
 
         }).then( (response) => {
             console.log(response.data);
@@ -73,7 +75,9 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:"67"
+            data:{
+                roomId:"67"
+            }
 
         }).then( (response) => {
             console.log(response.data);
@@ -86,7 +90,9 @@ const LoginPage = () =>{
             headers: {
                 "Content-Type": `application/json`,
             },
-            data:"67" //방 리스트를 조회하여 얻은 방 id를 요청하여 방정보 받아옴
+            data:{
+                roomId:"67"
+            } //방 리스트를 조회하여 얻은 방 id를 요청하여 방정보 받아옴
 
         }).then( (response) => {
             console.log(response.data);
